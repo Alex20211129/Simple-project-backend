@@ -11,7 +11,7 @@ const mypassport = (passport) => {
     let options = {};
     
     options.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-    options.secretOrKey = process.env.TOKEN_SECRET;
+    options.secretOrKey = process.env.secretOrKey;
     passport.use(new JwtStrategy(options, (jwt_payload, done) => {
         User.findOne({ _id: jwt_payload._id }).then((user) => {
             if (user) {
