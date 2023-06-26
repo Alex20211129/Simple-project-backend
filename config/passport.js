@@ -8,10 +8,10 @@ const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJwt = extractJwt.ExtractJwt;
 
 const mypassport = (passport) => {
-    let jwtoptions = {};
+    let Jwtoptions = {};
     
-    jwtoptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-    jwtoptions.secretOrKey = process.env.secretOrKey;
+    Jwtoptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
+    Jwtoptions.secretOrKey = process.env.secretOrKey;
     passport.use(new JwtStrategy(jwtoptions, (jwt_payload, done) => {
         User.findOne({ _id: jwt_payload._id }).then((user) => {
             if (user) {
