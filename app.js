@@ -25,7 +25,11 @@ app.use('/api/email' , emailRouter)
 
 app.listen(port, (req, res) => {
     try {
-        connectDB(process.env.MONGODB_URI);
+        mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        });
+        console.log('MongoDB Connected...');
         console.log(`Server is running on port :${port}`);
     } catch (error) {
         console.log(error);
