@@ -1,4 +1,4 @@
-import jwtStrategy from 'passport-local';
+import jwtStrategy from 'passport-jwt';
 import extractJwt from 'passport-jwt';
 import User from '../models/userSchema.js'
 import dotenv from 'dotenv';
@@ -11,7 +11,7 @@ const mypassport = (passport) => {
     let jwtoptions = {};
     
     jwtoptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-    jwtoptions.secretOrKey = process.env.secretOrKey;
+    jwtoptions.secretOrKey = process.env.TokenSecret;
     passport.use(new JwtStrategy(jwtoptions, (jwt_payload, done) => {
         User.findOne({ _id: jwt_payload._id }).then((user) => {
             if (user) {

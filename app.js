@@ -25,7 +25,7 @@ app.use('/api/email' , emailRouter)
 
 app.listen(port, (req, res) => {
     try {
-        connectDB(process.env.MONGO_URI);
+        connectDB(process.env.MONGODB_URI);
         console.log(`Server is running on port :${port}`);
     } catch (error) {
         console.log(error);
