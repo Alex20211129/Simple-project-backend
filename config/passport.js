@@ -8,11 +8,11 @@ const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJwt = extractJwt.ExtractJwt;
 
 const mypassport = (passport) => {
-    let options = {};
+    let jwtoptions = {};
     
-    options.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-    options.secretOrKey = process.env.secretOrKey;
-    passport.use(new JwtStrategy(options, (jwt_payload, done) => {
+    jwtoptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
+    jwtoptions.secretOrKey = process.env.secretOrKey;
+    passport.use(new JwtStrategy(jwtoptions, (jwt_payload, done) => {
         User.findOne({ _id: jwt_payload._id }).then((user) => {
             if (user) {
                 done(null, user);
