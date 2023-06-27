@@ -29,11 +29,6 @@ const upload = multer({
     }
 });
 
-adminProductsRouter.use('/', (req, res, next) => {
-    console.log('adminProduct middleware');
-    next();
-})
-
 
 //新增產品
 adminProductsRouter.post('/', upload.single("image"), async (req, res) => {
@@ -53,6 +48,7 @@ adminProductsRouter.post('/', upload.single("image"), async (req, res) => {
             res.status(201).send(product);
         
         } catch (error) {
+            res.status(500).send({ message: '伺服器錯誤，請重新操作' })
             console.log(error);
         }
     } else {
@@ -87,9 +83,10 @@ adminProductsRouter.patch('/:id', upload.single("image"), async (req, res) => {
                     }
                 }
             } else {
-                res.status(404).send({message: 'Product Not Found'});
+                res.status(404).send({message: '找不到此產品'});
             }    
         } catch (error) {
+            res.status(500).send({ message: '修改產品失敗' })
             console.log(error);
         }
     }else {
@@ -115,8 +112,7 @@ adminProductsRouter.delete('/:id', async (req, res) => {
         }
         catch (error) {
             console.log(error);
-            
-            //  res.status(500).send(error);
+            res.status(500).send({ message: '刪除產品失敗' })
         }
     }else {
         res.status(401).send({ message: '無此權限' });

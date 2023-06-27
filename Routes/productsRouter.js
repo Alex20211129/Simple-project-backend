@@ -17,7 +17,7 @@ productsRouter.get('/:category', async(req, res) => {
     if(products) {
         res.status(200).send(products);
     } else {
-        res.status(404).send({message: 'Product Not Found'});
+        res.status(404).send({message: '無此目錄'});
     }
 
 })
@@ -29,10 +29,11 @@ productsRouter.get('/category/:id', async (req, res) => {
         if(product) {
             res.status(200).send(product);
         } else {
-            res.status(404).send({message: 'Product Not Found'});
+            res.status(404).send({message: '無此產品'});
         }
         
     } catch (error) {
+        res.status(500).send('未知錯誤')
         console.log(error);
     }
 })

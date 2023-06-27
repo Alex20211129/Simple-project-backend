@@ -14,7 +14,7 @@ authRouter.post('/login', async (req, res) => {
             if (!isMatch) return res.status(401).send({message:"Invalid Password"});
             const tokenObj = { _id: user._id, name: user.name,role:user.role };
             const token = jsonwebtoken.sign(tokenObj, process.env.secretOrKey,{expiresIn:'1h'});
-            res.send({ success: true, token: "JWT " + token, user:{name:user.name,role:user.role} });
+            res.status(200).send({ success: true, token: "JWT " + token, user:{name:user.name,role:user.role} });
         });
     }).catch((err) => {
         res.status(400).send(err)
@@ -30,10 +30,11 @@ authRouter.post('/register', async (req, res) => {
             email: req.body.email,
             password: req.body.password
         }).then((user) => {
-            res.status(200).send({user});
+            const tokenObj = { _id: user._id, name: user.name,role:user.role };
+            const token = jsonwebtoken.sign(tokenObj, process.env.secretOrKey,{expiresIn:'1h'});
+            res.status(200).send({ success: true, token: "JWT " + token, user:{name:user.name,role:user.role} });
         }).catch((err) => {
             res.status(400).send(err);
-        
         })
     )
         

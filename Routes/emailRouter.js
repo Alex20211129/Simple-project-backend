@@ -21,11 +21,11 @@ emailRouter.post('/', (req, res) => {
         text: req.body.text + `郵件來自於${req.body.email}`, 
       });
       console.log("Message sent: %s", info.messageId);
-     res.status(200).send('success');   
+     res.status(200).send("寄送成功");   
     }
     main().catch(error=>{
         console.log(error);
-        res.status(401).send('Failure')
+        res.status(401).send("寄送失敗")
     })
 });
 

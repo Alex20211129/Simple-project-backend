@@ -1,5 +1,4 @@
-import jwtStrategy from 'passport-jwt';
-import extractJwt from 'passport-jwt';
+import {jwtStrategy,extractJwt} from 'passport-jwt';
 import User from '../models/userSchema.js';
 import dotenv from 'dotenv';
 dotenv.config()
