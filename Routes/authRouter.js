@@ -13,7 +13,7 @@ authRouter.post('/login', async (req, res) => {
             if (err) return res.status(400).send(err);
             if (!isMatch) return res.status(401).send({message:"Invalid Password"});
             const tokenObj = { _id: user._id, name: user.name,role:user.role };
-            const token = jsonwebtoken.sign(tokenObj, process.env.TOKEN_SECRET,{expiresIn:'1h'});
+            const token = jsonwebtoken.sign(tokenObj, process.env.secretOrKey,{expiresIn:'1h'});
             res.send({ success: true, token: "JWT " + token, user:{name:user.name,role:user.role} });
         });
     }).catch((err) => {

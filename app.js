@@ -10,11 +10,13 @@ import mypassport from './config/passport.js';
 import adminProductsRouter from './Routes/adminProduct.js';
 import emailRouter from './Routes/emailRouter.js';
 import mongoose from 'mongoose';
+import cors from 'cors'
 
 const port =  process.env.PORT || 8080
 mypassport(passport);
 dotenv.config();
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use('/upload',express.static('./upload'))
 app.use('/api/products', productsRouter)
