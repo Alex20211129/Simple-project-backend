@@ -1,8 +1,9 @@
-import {jwtStrategy,extractJwt} from 'passport-jwt';
+import pkg from 'passport-jwt';
 import User from '../models/userSchema.js';
 import dotenv from 'dotenv';
 dotenv.config()
 
+const {jwtStrategy , extractJwt} = pkg
 const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJwt = extractJwt.ExtractJwt;
 
