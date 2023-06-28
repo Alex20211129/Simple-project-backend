@@ -1,11 +1,10 @@
 import jwtStrategy from 'passport-jwt';
-import extractJwt from 'passport-jwt'
 import User from '../models/userSchema.js';
 import dotenv from 'dotenv';
 dotenv.config()
 
 const JwtStrategy = jwtStrategy.Strategy;
-const ExtractJwt = extractJwt.ExtractJwt;
+const ExtractJwt = jwtStrategy.ExtractJwt;
 
 const mypassport = (passport) => {
     let Jwtoptions = {};
