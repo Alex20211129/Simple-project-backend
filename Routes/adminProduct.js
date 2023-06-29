@@ -5,6 +5,7 @@ import Product from '../models/productSchema.js';
 
 const adminProductsRouter = express.Router();
 
+//set file save address and filename
 const store = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './upload/');
@@ -15,6 +16,7 @@ const store = multer.diskStorage({
     },
 });
 
+//set file save limit and type only jpeg or png 
 const upload = multer({
     storage: store,
     limits: {
@@ -30,7 +32,7 @@ const upload = multer({
 });
 
 
-//新增產品
+//post new product /新增產品
 adminProductsRouter.post('/', upload.single("image"), async (req, res) => {
     if (req.user.isAdmin) {
         const product = new Product({
@@ -52,10 +54,11 @@ adminProductsRouter.post('/', upload.single("image"), async (req, res) => {
             console.log(error);
         }
     } else {
-        res.status(401).send({ message: '無此權限' });
+       return res.status(401).send({ message: '無此權限' });
     }
 })
 
+//update a product /更新產品
 adminProductsRouter.patch('/:id', upload.single("image"), async (req, res) => {
     if (req.user.isAdmin) {
         try {
@@ -83,23 +86,23 @@ adminProductsRouter.patch('/:id', upload.single("image"), async (req, res) => {
                     }
                 }
             } else {
-                res.status(404).send({message: '找不到此產品'});
+                return res.status(404).send({message: '找不到此產品'});
             }    
         } catch (error) {
             res.status(500).send({ message: '修改產品失敗' })
             console.log(error);
         }
     }else {
-        res.status(401).send({ message: '無此權限' });
+       return res.status(401).send({ message: '無此權限' });
     }
 })
 
+//delete a product /刪除產品
 adminProductsRouter.delete('/:id', async (req, res) => {
     if (req.user.isAdmin) {
         try {
             const product = await Product.findById(req.params.id);
-            const productImage = product.image.imageOrigin;
-            if(!product) return res.status(400).send({error:`can't find the product with ID ${req.params.id} `})
+            if(!product) return res.status(404).send({error:`無法找到此產品 ID ${req.params.id} `})
             if (existsSync(product.image.imageOrigin)) {
                 const imageName = product.image.imageOrigin.split('\\')[1]
                 unlink(product.image.imageOrigin, function () {
@@ -108,14 +111,14 @@ adminProductsRouter.delete('/:id', async (req, res) => {
             }
             await Product.findByIdAndDelete(req.params.id);
             //確認檔案存在後，刪除檔案
-            res.status(200).send({ product });
+            res.status(200).send({ message:"成功刪除檔案" });
         }
         catch (error) {
             console.log(error);
             res.status(500).send({ message: '刪除產品失敗' })
         }
     }else {
-        res.status(401).send({ message: '無此權限' });
+       return res.status(401).send({ message: '無此權限' });
     }
 });
 

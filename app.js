@@ -9,12 +9,12 @@ import passport from 'passport';
 import mypassport from './config/passport.js';
 import adminProductsRouter from './Routes/adminProduct.js';
 import emailRouter from './Routes/emailRouter.js';
-import mongoose from 'mongoose';
 import cors from 'cors'
 
 const port =  process.env.PORT || 8080
 mypassport(passport);
 dotenv.config();
+
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -28,11 +28,9 @@ app.use('/api/email' , emailRouter)
 
 app.listen(port, (req, res) => {
     try {
-        mongoose.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        connectDB(process.env.MONGODB_URI).then(() => {
+            console.log('MongoDB Connected...');
         });
-        console.log('MongoDB Connected...');
         console.log(`Server is running on port :${port}`);
     } catch (error) {
         console.log(error);

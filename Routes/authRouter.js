@@ -6,6 +6,7 @@ import jsonwebtoken from 'jsonwebtoken';
 
 const authRouter = express.Router();
 
+//login /登入
 authRouter.post('/login', async (req, res) => {
     await User.findOne({ email: req.body.email }).then((user) => {
         if (!user) return res.status(401).send({message:"email not found"});
@@ -17,11 +18,15 @@ authRouter.post('/login', async (req, res) => {
             res.status(200).send({ success: true, token: "JWT " + token, user:{name:user.name,role:user.role} });
         });
     }).catch((err) => {
-        res.status(400).send(err)
+        res.status(500).send({ message: "未知錯誤" })
+        console.log(err)
     })
 
 });
 
+
+
+//register /註冊
 authRouter.post('/register', async (req, res) => {
     const findUser = await User.findOne({ email: req.body.email })
     findUser ? res.status(400).send({ message: "信箱已被註冊過" }) : (

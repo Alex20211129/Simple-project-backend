@@ -166,7 +166,7 @@ const data = {
     users: [
         {
             name: 'admin',
-            password: '123456'
+            password: `${process.env.AdminPassword}`
         }
     ]
 };

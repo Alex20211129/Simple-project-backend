@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 
 const emailRouter = express.Router();
 
+//set transporter/設置使用方法
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
