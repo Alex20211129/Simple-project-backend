@@ -26,14 +26,17 @@ app.use('/api/seed' , seedRoutes)
 app.use('/api/auth' , authRouter)
 app.use('/api/email' , emailRouter)
 
-app.listen(port, (req, res) => {
+
+const start = async () => {
     try {
-        connectDB(process.env.MONGODB_URI).then(() => {
+        await connectDB(process.env.MONGODB_URI).then(() => {
             console.log('MongoDB Connected...');
-        });
-        console.log(`Server is running on port :${port}`);
+        })
+        app.listen(port,console.log(`Server is running on port :${port}`))
     } catch (error) {
         console.log(error);
     }
-});
+};
+
+start();
 

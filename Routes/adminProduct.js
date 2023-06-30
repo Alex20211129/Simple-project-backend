@@ -7,11 +7,11 @@ const adminProductsRouter = express.Router();
 
 //set file save address and filename
 const store = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: function(req, file, cb) {
         cb(null, './upload/');
     },
 
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, file.originalname);
     },
 });

@@ -20,12 +20,11 @@ productsRouter.get('/', async(req, res) => {
 //獲得該目錄產品;
 productsRouter.get('/:category', async (req, res) => {
     try {
-        await Product.find({ category: req.params.category }).then(products =>
-        {
-            if (products) {
+        await Product.find({ category: req.params.category }).then((products) => {
+            if (products.length >0) {
                 res.status(200).send(products);
-            } else {
-                res.status(404).send({message: '無此目錄'})
+            } else if (products.length === 0) {
+                res.status(404).send({message: '無此目錄或沒有產品'})
             }
         })
     } catch (error) {
@@ -39,7 +38,7 @@ productsRouter.get('/:category', async (req, res) => {
 productsRouter.get('/category/:id', async (req, res) => {
     try {
         await Product.findOne({ _id: req.params.id }).then(product => {
-            if(product) {
+            if (product) {
                 res.status(200).send(product);
             } else {
                 res.status(404).send({message: '無此產品'});

@@ -8,7 +8,6 @@ const ExtractJwt = jwtStrategy.ExtractJwt;
 
 const mypassport = (passport) => {
     let Jwtoptions = {};
-    
     Jwtoptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
     Jwtoptions.secretOrKey = process.env.secretOrKey;
     passport.use(new JwtStrategy(Jwtoptions, (jwt_payload, done) => {
